@@ -1,9 +1,10 @@
 from django.contrib import admin
 from django.urls import include, path
 from rest_framework import routers
-from auth import views
+from apps import views
 
 router = routers.DefaultRouter()
+router.register(r'custom_users', views.CustomUserViewSet)
 router.register(r'users', views.UserViewSet)
 router.register(r'groups', views.GroupViewSet)
 
