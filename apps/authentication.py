@@ -1,4 +1,5 @@
 import hashlib
+import base64
 from datetime import datetime, timedelta
 from .models import CustomUser
 from .serializers import CustomUserSerializer
@@ -12,6 +13,7 @@ class CustomAuthentication(authentication.BaseAuthentication):
 		if not uid:
 			return None # 認證失敗
 		try:
+			uid = base64.b64decode(uid)
 			queryset = CustomUser.objects.get(pk=uid)
 			username = queryset.username
 			password = queryset.password
@@ -24,5 +26,5 @@ class CustomAuthentication(authentication.BaseAuthentication):
 				return None
 			return (queryset, None) # 認證成功
 
-		except CustomUser.DoesNotExist:
+		except:
 			return None
